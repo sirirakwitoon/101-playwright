@@ -1,0 +1,17 @@
+{
+  "name": "learnplaywright",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "playwright": "npx playwright test --no-deps --workers=4 --project=chrome",
+    "playwright:ui": "npx playwright test --no-deps --workers=4 --project=chrome --ui",
+    "playwright:headed": "npx playwright test --no-deps --workers=4 --project=chrome --headed"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@playwright/test": "^1.37.1"
+  }
+}
