@@ -7,21 +7,21 @@ export class LoginPage {
     readonly nextButton: Locator;
     readonly passwordInput: Locator;
     readonly loginButton: Locator;
+    readonly logoutButton: Locator;
 
     constructor(page: Page) {
         this.page = page;
-        this.usernameInput = this.page.getByLabel('Phone, email, or username');
-        this.nextButton = this.page.getByRole('button', { name: 'Next' });
-        this.passwordInput = this.page.getByLabel('Password', { exact: true });
-        this.loginButton = this.page.getByTestId('LoginForm_Login_Button');
+        this.usernameInput = this.page.getByTestId('login-field');
+        this.passwordInput = this.page.getByTestId('password-field');
+        this.loginButton = this.page.getByTestId('login-button');
+        this.logoutButton = this.page.getByTestId('menu-signout');
     }
 
     async visitTwitter() {
-        await this.page.goto('https://twitter.com/login');
+        await this.page.goto('https://twittah.web.app');
     }
     async typeUsername() {
         await this.usernameInput.type(validUser.credential.login);
-        await this.nextButton.click();
     }
     async typePassword() {
         await this.passwordInput.type(validUser.credential.password);
@@ -44,5 +44,9 @@ export class LoginPage {
     async loginFail() {
         await this.typeInvalidUsername()
         await this.typeInvalidPassword()
+    }
+
+    async logout(){
+        await this.logoutButton.click()
     }
 }

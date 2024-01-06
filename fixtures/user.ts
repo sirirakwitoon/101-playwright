@@ -1,10 +1,10 @@
 import { User } from "../interfaces/user";
 
 export const validUser: User = {
-    displayName:'twitter',
+    displayName:'siriak',
     credential:{
-        login: 'twitter',
-        password:'123',
+        login: 'sirirak',
+        password:'123456',
         errorMessage: ''
     }
 };

@@ -4,49 +4,40 @@ import { HomePage } from "./page/homepage";
 import { LoginTwittahPage } from "./page/login-twittah";
 import { invalidUsers, suspendedUser } from "../fixtures/user";
 
-// test('Visit Twittah', async ({page})=>{
-//     await page.goto('https://twittah.web.app');
-//     const appName = page.getByTestId('app-name');
+test('Visit Twittah', async ({ page }) => {
+    await page.goto('https://twittah.web.app');
+    const appName = page.getByTestId('app-name');
 
-//     await expect(appName).toBeVisible();
-//     await expect(appName).toHaveText('Twittah!');
-// });
+    await expect(appName).toBeVisible();
+    await expect(appName).toHaveText('Twittah!');
+});
 
-// test('Login', async({page})=>{
-//     await page.goto('https://twittah.web.app');
-//     await page.getByTestId('login-field').fill('nutsrk');
-//     await page.getByTestId('password-field').fill('123456');
-//     await page.getByTestId('login-button').click();
-//     await expect(page.getByTestId('user-profile-display-name'));
-//     //post
-//     await page.getByTestId('message-field"').fill('hola hola');
-//     await page.getByTestId('post-button').click();
-//     //logout
-//     await page.getByTestId('menu-signout').click();
-// })
+test('Login and Post', async ({ page }) => {
 
-// test('Post Twitter', async ({ page }) => {
-//     const loginPage = new LoginPage(page)
-//     const homepage = new HomePage(page)
+    const loginPage = new LoginPage(page);
+    const homepage = new HomePage(page);
 
+    await test.step('visit website', async () => {
+        await loginPage.visitTwitter()
+    });
 
-//     await loginPage.visitTwitter()
-//     await loginPage.login()
-//     await homepage.post()
-// });
+    await test.step('login', async () => {
+        await loginPage.login()
+        await homepage.expectToHomePage()
+    });
 
-// test('Login Fail', async ({ page }) => {
-//     const loginPage = new LoginPage(page)
+    await test.step('Post', async () => {
+        const messagePost = 'playwright eiei';
+        await homepage.post(messagePost)
+        await page.waitForTimeout(1000)
+        await homepage.expectDisplayPostMessage(messagePost)
 
-//     await loginPage.visitTwitter()
-//     await loginPage.loginFail()
-// })
-
-// test('login twittah fail', async ({ page }) => {
-//     const loginTwittahPage = new LoginTwittahPage(page)
-//     await loginTwittahPage.loginFail()
-// })
-test.describe('test login fail', async () => {
+    });
+    await test.step('logout', async () => {
+        await loginPage.logout();
+    });
+})
+test.describe('Login fail', async () => {
     for (const invalidUser of invalidUsers) {
         test(`invalid user: ${invalidUser.credential.login}`, async ({ page }) => {
             const loginTwittahPage = new LoginTwittahPage(page)
