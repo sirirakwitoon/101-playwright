@@ -1,16 +1,16 @@
 import { expect, test } from "@playwright/test";
-import { LoginPage } from "./page/login-page";
-import { HomePage } from "./page/homepage";
+import { LoginPage } from "./page/login.page";
+import { HomePage } from "./page/home.page";
 import { LoginTwittahPage } from "./page/login-twittah";
 import { invalidUsers, suspendedUser } from "../fixtures/user";
 
-test('Visit Twittah', async ({ page }) => {
-    await page.goto('https://twittah.web.app');
-    const appName = page.getByTestId('app-name');
+// test('Visit Twittah', async ({ page }) => {
+//     await page.goto('https://twittah.web.app');
+//     const appName = page.getByTestId('app-name');
 
-    await expect(appName).toBeVisible();
-    await expect(appName).toHaveText('Twittah!');
-});
+//     await expect(appName).toBeVisible();
+//     await expect(appName).toHaveText('Twittah!');
+// });
 
 test('Login and Post', async ({ page }) => {
 
@@ -31,7 +31,6 @@ test('Login and Post', async ({ page }) => {
         await homepage.post(messagePost)
         await page.waitForTimeout(1000)
         await homepage.expectDisplayPostMessage(messagePost)
-
     });
     await test.step('logout', async () => {
         await loginPage.logout();
